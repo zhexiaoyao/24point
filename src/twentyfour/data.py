@@ -36,7 +36,10 @@ def _first_present(example: dict[str, Any], names: list[str]) -> Any:
 
 
 def normalize_24game_example(example: dict[str, Any]) -> dict[str, Any]:
-    raw_numbers = _first_present(example, ["numbers", "nums", "cards", "input", "question", "problem"])
+    raw_numbers = _first_present(
+        example,
+        ["numbers", "nums", "cards", "input", "question", "problem", "Puzzles", "puzzles"],
+    )
     numbers = parse_numbers(raw_numbers)
     solvable = example.get("solvable", example.get("is_solvable", True))
     return {
@@ -68,4 +71,3 @@ def load_game_of_24(split: str = "train", mode: str = "all", limit: int | None =
     if limit:
         dataset = dataset.select(range(min(limit, len(dataset))))
     return dataset
-
