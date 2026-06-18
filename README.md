@@ -97,11 +97,19 @@ python scripts/train_sft.py \
 
 P100 上 SFT 如果第一步出现 `Non-finite loss ... nan`，不要加 `--fp16`；用 fp32 做 SFT warmup 更稳。GRPO 阶段可以继续使用 `--fp16` 节省显存。
 
-然后把 GRPO 的 `--model_name` 改成 SFT 输出目录：
+SFT 使用 LoRA 时，先把 adapter 合并进基座模型，避免 GRPO 在未合并的 adapter 上再套一层 LoRA：
+
+```bash
+python scripts/merge_lora.py \
+  --adapter_path outputs/qwen2.5-1.5b-24point-sft \
+  --output_dir outputs/qwen2.5-1.5b-24point-sft-merged
+```
+
+然后把 GRPO 的 `--model_name` 改成合并后的 SFT 模型目录：
 
 ```bash
 accelerate launch scripts/train_grpo.py \
-  --model_name outputs/qwen2.5-1.5b-24point-sft \
+  --model_name outputs/qwen2.5-1.5b-24point-sft-merged \
   --train_file data/processed/train_nlile_solvable.jsonl \
   --output_dir outputs/qwen2.5-1.5b-24point-grpo \
   --max_steps 800 \
