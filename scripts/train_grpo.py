@@ -28,6 +28,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--num_generations", type=int, default=4)
     parser.add_argument("--max_prompt_length", type=int, default=256)
     parser.add_argument("--max_completion_length", type=int, default=256)
+    parser.add_argument("--temperature", type=float, default=0.9)
+    parser.add_argument("--beta", type=float, default=0.04)
     parser.add_argument("--logging_steps", type=int, default=5)
     parser.add_argument("--save_steps", type=int, default=100)
     parser.add_argument("--train_limit", type=int, default=None)
@@ -91,6 +93,8 @@ def main() -> None:
         num_generations=args.num_generations,
         max_prompt_length=args.max_prompt_length,
         max_completion_length=args.max_completion_length,
+        temperature=args.temperature,
+        beta=args.beta,
         logging_steps=args.logging_steps,
         save_steps=args.save_steps,
         bf16=args.bf16,

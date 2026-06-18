@@ -180,6 +180,8 @@ tests/
 - `proximity_reward`：合法算式的结果越接近 24，奖励越高。
 - `correct_reward`：算式是否等于 24。
 
+默认奖励采用分层权重：格式正确 `+0.5`、格式错误 `-0.5`；合法表达式 `+1`、非法表达式 `-1`；距离奖励最高 `+0.1`；精确等于 24 额外 `+5`。这样可避免 proximity reward 压过任务的精确目标。
+
 定量分析建议报告：
 
 - in-distribution success rate。
