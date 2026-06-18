@@ -166,6 +166,7 @@ tests/
 
 - `answer_format_reward`：是否包含合法 `<answer>` 标签。
 - `valid_expression_reward`：算式是否合法、数字是否刚好使用一次。
+- `proximity_reward`：合法算式的结果越接近 24，奖励越高。
 - `correct_reward`：算式是否等于 24。
 
 定量分析建议报告：

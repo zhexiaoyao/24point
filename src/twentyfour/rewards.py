@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import math
+
 from .verifier import extract_answer, has_r1_format, verify_expression
 
 
@@ -30,3 +32,16 @@ def correctness_reward(completions, numbers=None, nums=None, **kwargs) -> list[f
         rewards.append(1.0 if result.ok else 0.0)
     return rewards
 
+
+def proximity_reward(completions, numbers=None, nums=None, **kwargs) -> list[float]:
+    """Dense verifiable reward that increases as a valid expression approaches 24."""
+    batch_numbers = numbers if numbers is not None else nums
+    rewards = []
+    for text, item_numbers in zip(completions, batch_numbers):
+        result = verify_expression(extract_answer(text), _normalize_numbers(item_numbers))
+        if result.value is None:
+            rewards.append(0.0)
+            continue
+        distance = abs(float(result.value) - 24.0)
+        rewards.append(0.5 * math.exp(-distance / 6.0))
+    return rewards

@@ -8,7 +8,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from trl import GRPOConfig, GRPOTrainer
 
 from twentyfour.data import load_nlile_24game
-from twentyfour.rewards import answer_format_reward, correctness_reward, valid_expression_reward
+from twentyfour.rewards import answer_format_reward, correctness_reward, proximity_reward, valid_expression_reward
 
 
 def parse_args() -> argparse.Namespace:
@@ -103,7 +103,7 @@ def main() -> None:
     trainer = GRPOTrainer(
         model=model,
         processing_class=tokenizer,
-        reward_funcs=[answer_format_reward, valid_expression_reward, correctness_reward],
+        reward_funcs=[answer_format_reward, valid_expression_reward, proximity_reward, correctness_reward],
         args=training_args,
         train_dataset=dataset,
         peft_config=peft_config,
