@@ -1,0 +1,13 @@
+README.md
+pyproject.toml
+src/twentyfour/__init__.py
+src/twentyfour/data.py
+src/twentyfour/prompts.py
+src/twentyfour/rewards.py
+src/twentyfour/solver.py
+src/twentyfour/verifier.py
+src/twentyfour_grpo.egg-info/PKG-INFO
+src/twentyfour_grpo.egg-info/SOURCES.txt
+src/twentyfour_grpo.egg-info/dependency_links.txt
+src/twentyfour_grpo.egg-info/top_level.txt
+tests/test_verifier.py
